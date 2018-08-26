@@ -7,6 +7,7 @@ use app\models\Payment;
 use app\models\Catchshare;
 use app\models\Member;
 use yii\filters\AccessControl;
+use app\models\ConstProject;
 
 class MemberController extends Controller
 {  
@@ -17,7 +18,7 @@ class MemberController extends Controller
 						'class' => AccessControl::className(),
 						'rules' => [
 								[
-										'actions' => ['list', 'edit'],
+										'actions' => ['list', 'edit', 'list-sp'],
 										'allow' => true,
 										'roles' => ['@'],
 								],
@@ -60,5 +61,24 @@ class MemberController extends Controller
     	return $this->render('edit',[
     			'model'=>$model
     	]);
+    }
+    public function actionListSp(){
+        //$list = Member::find()->all();
+        $catchAll = Catchshare::find()
+        ->joinWith(['groupShare gs'], true, 'INNER JOIN')
+        ->where(['gs.status'=>ConstProject::STATUS_SHARE_PLAYING])
+        ->all();
+        
+        $results = [];
+        foreach($catchAll as $catch){
+            $countWin = Payment::find()->where(['is_win'=>1, 'memberId'=>$catch->memberId, 'groupShareId'=>$catch->groupShareId])->count('*');
+            $results[$catch->memberId]['list'][] = $catch->groupShare->name.'('.$countWin.'/'.$catch->amount.')';
+            $results[$catch->memberId]['member'] = $catch->member->getDisplay();
+        }
+        
+        
+        return $this->render('list-sp',[
+            'results'=>$results
+        ]);
     }
 }

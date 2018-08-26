@@ -65,7 +65,7 @@ $this->registerCss ( $css );
 <div class="row">
 	<div class="col-lg-6">
     	<div class="input-group">
-    	<?php echo Html::input('text','nickname',$arrGroup['detail']['memberName'],['class'=> 'form-control active-suggestion', 'placeholder'=>'ชื่อเล่น ,ชื่อจริง, นามสกุล'])?> 	
+    	<?php echo Html::input('text','nickname',$arrGroup['detail']['memberName'],['class'=> 'form-control active-suggestion', 'placeholder'=>'ชื่อเล่น ,ชื่อจริง, นามสกุล','autocomplete'=>'off'])?> 	
 		</div>
 	</div>
 	<div class="col-lg-6">

@@ -43,7 +43,7 @@ $this->registerCss ( $css );
 		$catch = Catchshare::find()->where(['groupShareId'=>$payment->groupShareId,'memberId'=>$payment->memberId])->one();	
   	?>
 		    <tr>
-				<th scope="row"><?php echo $key+1?></th>
+				<th scope="row"><?php echo $key+1?> <?php echo ($payment->is_win == 1)?'(ได้แชร์)':''?></th>
 				<td><?php echo $payment->member->nickname?>  <small><?php echo $payment->member->firstname.' '.$payment->member->lastname?></small></td>
 				<td><?php echo empty($catch)?'เคยเล่น':number_format($catch->amount)?></td>
 				<td class="text-right"><?php echo number_format($payment->paidValue,2)?></td>

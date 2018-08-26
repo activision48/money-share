@@ -44,7 +44,15 @@ class ConfigController extends Controller {
 						'group' => [ 
 								'payment/paydetail' 
 						] 
-				] 
+				],
+	            [
+                        'title' => 'มือเป็นมือตาย',
+                        'icon' => '',
+                        'uri' => 'member/list-sp',
+                        'group' => [
+                            'member/list-sp'
+                        ] 
+	            ]
 		];
 		return $arrMenu;
 	}

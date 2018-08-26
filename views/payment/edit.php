@@ -46,7 +46,13 @@ $this->registerCss ( $css );
 	  	?>
 		    <tr>
 				<th scope="row"><?php echo $key+1?></th>
-				<td><?php echo $catch->member->nickname?> <small><?php echo $catch->member->firstname.' '.$catch->member->lastname?></small></td>
+				<td>	
+						<label class="radio-inline">
+						<?php echo Html::radio('win_id[]','',['value'=>$catch->memberId])?>
+						&nbsp;
+						<?php echo $catch->member->nickname?> <small><?php echo $catch->member->firstname.' '.$catch->member->lastname?></small>
+						</label>
+				</td>
 				<td><?php echo $catch->amount ?></td>
 				<td><?php echo Html::input('number','base[]',($catch->groupShare->value*$catch->amount),['class'=>'form-control','min'=>'1']) ?></td>
 				<td><?php echo Html::input('number','exten[]',$exten,['class'=>'form-control','min'=>'0'])?></td>

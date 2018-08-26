@@ -49,6 +49,7 @@ $this->registerCss ( $css );
 			<th>วันที่</th>
 			<th>รวมต้น</th>
 			<th>รวมดอก</th>
+			<th>คนที่ได้แชร์</th>
 			<th>Act.</th>
 		</tr>
 	</thead>
@@ -58,6 +59,7 @@ $this->registerCss ( $css );
 			<td><?php echo date('d/m/Y',strtotime($key))?></td>
 			<td><?php echo number_format($model['base'],2) ?></td>
 			<td><?php echo number_format($model['exten'],2) ?></td>
+			<td><?php echo isset($model['is_win'])?$model['is_win']:''?></td>
 			<td><a href="<?php echo Url::toRoute(['payment/view','groupShareId'=>$groupDetail->id,'paidDate'=>date('d/m/Y',strtotime($key))])?>" class="btn btn-info">ดูรายละเอียด</a></td>
 		</tr>
 	<?php }?>

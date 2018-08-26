@@ -15,6 +15,7 @@ use Yii;
  * @property double $exten
  * @property string $createTime
  * @property string $lastUpdateTime
+ * @property integer $is_win
  *
  * @property Groupshare $groupShare
  * @property Member $member
@@ -37,7 +38,7 @@ class Payment extends \yii\db\ActiveRecord
         return [
             [['paidDate', 'createTime', 'lastUpdateTime'], 'safe'],
             [['paidValue', 'exten'], 'number'],
-            [['memberId', 'groupShareId'], 'integer'],
+            [['memberId', 'groupShareId', 'is_win'], 'integer'],
             [['groupShareId'], 'exist', 'skipOnError' => true, 'targetClass' => Groupshare::className(), 'targetAttribute' => ['groupShareId' => 'id']],
             [['memberId'], 'exist', 'skipOnError' => true, 'targetClass' => Member::className(), 'targetAttribute' => ['memberId' => 'id']],
         ];
@@ -57,6 +58,7 @@ class Payment extends \yii\db\ActiveRecord
             'exten' => 'Exten',
             'createTime' => 'Create Time',
             'lastUpdateTime' => 'Last Update Time',
+            'is_win' => 'Is Win',
         ];
     }
 

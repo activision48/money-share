@@ -73,6 +73,11 @@ class Member extends \yii\db\ActiveRecord
     }
     
     public function getDisplay(){
-    	return $this->nickname;
+        $full_name = '';
+        if(!empty($this->firstname) && !empty($this->lastname)){
+            $full_name = ' ('.$this->firstname.' '.$this->lastname.')';
+        }
+        
+        return $this->nickname.$full_name;
     }
 }

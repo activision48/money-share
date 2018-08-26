@@ -163,15 +163,20 @@ public function behaviors()
 		}
 
 		$result = [];
+		
 		foreach($tmp as $date){
 			$lst = Payment::find()->where(['groupShareId'=>$groupShareId,'paidDate'=>$date])->all();
 			$totalPaidValue = 0;
 			$totalExten = 0;
+			$is_win_display = '';
 			foreach ($lst as $group){
 				$totalPaidValue+=$group->paidValue;
 				$totalExten+=$group->exten;
+				if($group->is_win == 1){
+				    $is_win_display = $group->member->getDisplay();
+				}
 			}
-			$result[$date] = ['base'=>$totalPaidValue,'exten'=>$totalExten];
+			$result[$date] = ['base'=>$totalPaidValue,'exten'=>$totalExten, 'is_win'=>$is_win_display];
 		}
 		
 		header('Content-Type: application/json');
@@ -194,7 +199,10 @@ public function behaviors()
     		$paidDate = \Yii::$app->request->post('paidDate');
     		$date = \DateTime::createFromFormat('d/m/Y', $paidDate);
     		$paidDateConvert = $date->format('Y-m-d');
-    		    		
+    		
+    		$winId = \Yii::$app->request->post('win_id');
+    		$winId = isset($winId[0])?$winId[0]:'';
+    		
     		$models = Payment::find()
     		->where(['groupShareId'=>$groupShareId])
     		->andWhere(['like','paidDate',$paidDateConvert])->all();
@@ -220,6 +228,7 @@ public function behaviors()
     			$payment->lastUpdateTime = date('Y-m-d H:i:s',time());
     			$payment->paidValue = $arrBase[$i];
     			$payment->exten = $arrExten[$i];
+    			$payment->is_win = ($winId == $arrMemberId[$i])? 1 : 0;
     			$payment->save();
     		}
     		
